@@ -2,11 +2,8 @@ package com.naveen.expensetracker.controller;
 
 import com.naveen.expensetracker.entity.Expense;
 import com.naveen.expensetracker.service.ExpenseService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import java.util.List;
 
 
@@ -32,6 +29,22 @@ public class ExpenseController {
     @GetMapping("/expenses")
     public List<Expense> getAllExpenses(){
         return expenseService.getAllExpenses();
+    }
+
+    @GetMapping("/expenses/{id}")
+    public Expense getExpenseById(@PathVariable  Long id){
+        return expenseService.getExpenseById(id);
+    }
+
+    @PutMapping("/expenses/{id}")
+    public Expense updateExpense(@RequestBody Expense expense, @PathVariable Long id){
+        return expenseService.updateExpense(id, expense);
+    }
+
+    @DeleteMapping("/expenses/{id}")
+    public String deleteExpense(@PathVariable Long id){
+        expenseService.deleteExpenseById(id);
+        return "Expense deleted successfully.";
     }
 
 }

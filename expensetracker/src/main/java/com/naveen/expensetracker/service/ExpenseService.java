@@ -40,5 +40,15 @@ public class ExpenseService {
          expenseRepository.deleteById(id);
     }
 
+    public Expense updateExpense(Long id,Expense updatedExpense){
+        Expense existingExpense = expenseRepository.findById(id);
+        if(existingExpense == null){
+            throw new RuntimeException("Expense not found");
+        }
+        existingExpense.setTitle(updatedExpense.getTitle());
+        existingExpense.setAmount(updatedExpense.getAmount());
+        existingExpense.setCategory(updatedExpense.getCategory());
 
+        return expenseRepository.save(existingExpense);
+    }
 }
